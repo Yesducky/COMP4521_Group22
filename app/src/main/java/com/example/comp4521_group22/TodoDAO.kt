@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TodoDAO {
@@ -18,7 +19,13 @@ interface TodoDAO {
     @Delete
     fun delete(todo: Todo)
 
-    @Query("SELECT * FROM Todo")
+    @Query("SELECT * FROM Todo ORDER BY id ASC")
     fun getAll(): List<Todo>
+
+    @Insert
+    fun insert(todo: Todo): Long
+
+    @Query("DELETE FROM Todo")
+    fun deleteAll()
 
 }
