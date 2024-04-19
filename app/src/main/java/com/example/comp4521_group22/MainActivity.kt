@@ -28,25 +28,37 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val addBtn:FloatingActionButton = findViewById(R.id.addBtn)
+        val swipeRefreshLayout:SwipeRefreshLayout = findViewById(R.id.container)
+
         //init todo list
         rvList = findViewById(R.id.TodoList)
         val layoutManager = GridLayoutManager(this, 1)
         rvList.layoutManager = layoutManager
 
-        val t1 = thread {
-            //init with local db
+        //init with local db
+        thread {
             val TodoDAO = TodoDB.getDatabase(this).TodoDAO()
             listAdapter = ListAdapter(TodoDAO.getAll())
             rvList.adapter = listAdapter
-            //update from online
+            listAdapter.notifyDataSetChanged()
+        }.join()
+
+        //initial update from the remote
+        thread {
+            swipeRefreshLayout.isRefreshing = true
+            val TodoDAO = TodoDB.getDatabase(this).TodoDAO()
             UpdateTodo().updateDatabaseFromOnline(TodoDAO)
+            listAdapter.ls = TodoDAO.getAll()
+            Handler(Looper.getMainLooper()).post {
+                listAdapter.notifyDataSetChanged()
+                swipeRefreshLayout.isRefreshing = false
+            }
         }
-        t1.join()
-        listAdapter.notifyDataSetChanged()
+
 
 
         //swipe down to refresh
-        val swipeRefreshLayout:SwipeRefreshLayout = findViewById(R.id.container)
         swipeRefreshLayout.setOnRefreshListener {
             thread {
                 val TodoDAO = TodoDB.getDatabase(this).TodoDAO()
@@ -60,8 +72,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val btn:FloatingActionButton = findViewById(R.id.addBtn)
-        btn.setOnClickListener(){
+
+        addBtn.setOnClickListener{
 
         }
 
