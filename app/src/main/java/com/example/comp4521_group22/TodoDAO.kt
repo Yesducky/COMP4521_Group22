@@ -31,4 +31,7 @@ interface TodoDAO {
     @Query("SELECT MAX(global_id) From Todo")
     fun getMaxGlobalID(): Int
 
+    @Query("SELECT * FROM todo WHERE global_id=:globalId ")
+    fun get(globalId:Int):Todo
+
 }

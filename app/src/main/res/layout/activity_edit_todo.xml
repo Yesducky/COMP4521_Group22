@@ -5,10 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     android:orientation="vertical"
-    android:textAlignment="center"
-    tools:context=".InputTodo">
+    android:textAlignment="viewStart"
+    tools:context=".EditTodo">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +16,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/btnBack"
+            android:id="@+id/edit_todo_btnBack"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -28,22 +27,22 @@
             tools:ignore="RtlSymmetry" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/edit_todo_title"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_weight="2"
-            android:text="@string/entry"
+            android:text="@string/edit"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             app:autoSizeTextType="uniform" />
 
         <TextView
-            android:id="@+id/btnHabit"
+            android:id="@+id/edit_todo_id"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingEnd="10dp"
-            android:text="@string/habit"
+            android:text="@string/_00"
             android:textAlignment="viewEnd"
             android:textColor="#AEAEAE"
             app:autoSizeTextType="uniform"
@@ -52,24 +51,23 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/todo_summary"
+        android:id="@+id/edit_todo_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
-        android:background="#EAEAEA"
+        android:background="#D8D8D8"
         android:ems="10"
-        android:hint="@string/new_task"
         android:inputType="text"
         android:paddingStart="20dp"
         android:textColor="#000000"
         android:textColorHint="#616161"
         android:textSize="40sp"
-        tools:ignore="RtlSymmetry"
-        android:autofillHints="@string/new_task" />
+        tools:ignore="LabelFor,RtlSymmetry"
+        android:autofillHints="" />
 
     <EditText
-        android:id="@+id/todo_description"
+        android:id="@+id/edit_todo_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -83,7 +81,7 @@
         android:paddingRight="5dp"
         android:textColorHint="#787878"
         android:textSize="20sp"
-        android:autofillHints="@string/description" />
+        android:autofillHints="" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -93,34 +91,34 @@
         tools:ignore="RtlSymmetry">
 
         <TextView
-            android:id="@+id/todo_deadline_tv"
-            android:layout_width="20dp"
+            android:id="@+id/edit_todo_deadline_tv"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="0dp"
-            android:layout_weight="1"
             android:text="@string/deadline"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/todo_deadline_datepicker_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/edit_todo_deadline_datepicker_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="20sp" />
 
         <ImageButton
-            android:id="@+id/todo_datepickerbutton"
+            android:id="@+id/edit_todo_datepickerbutton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/datepicker"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/baseline_date_range_24" />
+
     </LinearLayout>
 
     <EditText
-        android:id="@+id/todo_progress"
+        android:id="@+id/edit_todo_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -135,7 +133,7 @@
         android:paddingRight="5dp"
         android:textColorHint="#787878"
         android:textSize="20sp"
-        android:autofillHints="" />
+        android:autofillHints="@string/progress" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -145,7 +143,7 @@
         android:paddingRight="25dp">
 
         <TextView
-            android:id="@+id/todo_importance_tv"
+            android:id="@+id/edit_todo_importance_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -154,45 +152,66 @@
             android:textSize="20sp" />
 
         <RadioGroup
-            android:id="@+id/todo_importance"
+            android:id="@+id/edit_todo_importance"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/todo_importance_0"
+                android:id="@+id/edit_todo_importance_0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:height="48dp"
                 android:background="#8BC34A"
-                android:checked="true" />
+                android:checked="false" />
 
             <RadioButton
-                android:id="@+id/todo_importance_1"
+                android:id="@+id/edit_todo_importance_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#FFEB3B" />
 
             <RadioButton
-                android:id="@+id/todo_importance_2"
+                android:id="@+id/edit_todo_importance_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#F44336" />
         </RadioGroup>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/todo_submit"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/submit" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/edit_todo_delete"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FF6E6E"
+            android:text="@string/delete" />
+
+        <Button
+            android:id="@+id/edit_todo_submit"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:backgroundTint="#AEFF74"
+            android:text="@string/submit" />
+
+    </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/edit_todo_progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 </LinearLayout>

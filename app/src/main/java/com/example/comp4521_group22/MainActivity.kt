@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         thread {
             swipeRefreshLayout.isRefreshing = true
             val TodoDAO = TodoDB.getDatabase(this).TodoDAO()
-            UpdateTodo().updateDatabaseFromOnline(TodoDAO)
+            UpdateTodo().getTodo(TodoDAO)
             listAdapter.ls = TodoDAO.getAll()
             Handler(Looper.getMainLooper()).post {
                 listAdapter.notifyDataSetChanged()
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         swipeRefreshLayout.setOnRefreshListener {
             thread {
                 val TodoDAO = TodoDB.getDatabase(this).TodoDAO()
-                UpdateTodo().updateDatabaseFromOnline(TodoDAO)
+                UpdateTodo().getTodo(TodoDAO)
                 listAdapter.ls = TodoDAO.getAll()
 
                 Handler(Looper.getMainLooper()).post {

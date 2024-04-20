@@ -10,6 +10,7 @@
     app:cardElevation="5dp">
 
     <LinearLayout
+        android:id="@+id/todo_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -22,7 +23,7 @@
             android:text=""
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:visibility="invisible" />
 
         <TextView
@@ -30,14 +31,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/todo_item_deadline"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="3"
             android:background="@android:color/holo_green_dark"
-            android:layout_weight="3" />
+            app:autoSizeTextType="uniform" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

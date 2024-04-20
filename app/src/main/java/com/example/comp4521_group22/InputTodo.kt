@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -42,18 +43,18 @@ class InputTodo : AppCompatActivity() {
         }
 
         //nav
-        val backBtn = findViewById<Button>(R.id.btnBack)
+        val backBtn = findViewById<TextView>(R.id.btnBack)
         backBtn.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
         }
 
 
         //form area
-        var groupdata: String = "1"
+        val groupdata = "1"
 
         val summaryData = findViewById<EditText>(R.id.todo_summary)
         val descriptionData = findViewById<EditText>(R.id.todo_description)
-        val deadlinebutton = findViewById<Button>(R.id.todo_datepickerbutton)
+        val deadlinebutton = findViewById<ImageButton>(R.id.todo_datepickerbutton)
         val tvdeadline = findViewById<TextView>(R.id.todo_deadline_datepicker_tv)
         val progressData = findViewById<EditText>(R.id.todo_progress)
         val importance_group  = findViewById<RadioGroup>(R.id.todo_importance)
@@ -77,7 +78,7 @@ class InputTodo : AppCompatActivity() {
             }
         }
 
-        deadlinebutton.setOnClickListener {  //日曆按鈕的點擊事件
+        deadlinebutton.setOnClickListener {
             DatePickerDialog(
                 this,
                 listener,
@@ -87,22 +88,15 @@ class InputTodo : AppCompatActivity() {
             ).show()
         }
 
-        importance_group.setOnCheckedChangeListener(){group, checkedID->
-            if(checkedID == importance_group_0.id){
-                importance_data = 0
+        importance_group.setOnCheckedChangeListener(){ _, checkedID->
+            when(checkedID){
+                importance_group_0.id -> importance_data = 0
+                importance_group_1.id -> importance_data = 1
+                importance_group_2.id -> importance_data = 2
             }
-            else if (checkedID == importance_group_1.id){
-                importance_data = 1
-            }
-            else if (checkedID == importance_group_2.id){
-                importance_data = 2
-            }
+
         }
-        var global_id: Int = 0
-        val TodoDAO = TodoDB.getDatabase(MainActivity()).TodoDAO()
-        thread {
-            global_id = TodoDAO.getMaxGlobalID()
-        }
+
 
 
         postbutton.setOnClickListener{
@@ -116,21 +110,21 @@ class InputTodo : AppCompatActivity() {
             }
             postbutton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
-            val description:String = if(descriptionData.text.toString().trim().isNotEmpty()) summaryData.text.toString() else "null"
-            val progress:String = if(progressData.text.toString().trim().isNotEmpty()) summaryData.text.toString() else "null"
+            val description:String = if(descriptionData.text.toString().trim().isNotEmpty()) descriptionData.text.toString() else "null"
+            val progress:String = if(progressData.text.toString().trim().isNotEmpty()) progressData.text.toString() else "null"
 
 
             thread {
-                Log.e("p","todo")
                 val myformat = "yyyy-MM-dd"
                 val sdf = SimpleDateFormat(myformat, Locale.CHINA)
                 val created = sdf.format(Date())
                 if(deadlinedata == null){
                     deadlinedata = ""
                 }
+                Log.i("msg", deadlinedata)
 
                 val newTodoItem = Todo(
-                    global_id = global_id,
+                    global_id = 0,
                     group = groupdata,
                     summary = summary,
                     description = description,
@@ -142,7 +136,7 @@ class InputTodo : AppCompatActivity() {
                     shared = false
                 )
 
-                UpdateTodo().postJsonData("http://yesducky.com/api/todo/",  newTodoItem)
+                UpdateTodo().postTodo("http://yesducky.com/api/todo/",  newTodoItem)
 
                 Handler(Looper.getMainLooper()).post {
                     startActivity(Intent(this, MainActivity::class.java))
