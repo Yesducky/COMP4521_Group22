@@ -28,4 +28,7 @@ interface TodoDAO {
     @Query("DELETE FROM Todo")
     fun deleteAll()
 
+    @Query("SELECT MAX(global_id) From Todo")
+    fun getMaxGlobalID(): Int
+
 }

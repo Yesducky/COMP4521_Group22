@@ -1,20 +1,16 @@
 package com.example.comp4521_group22
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.Button
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.util.concurrent.Executors
 import kotlin.concurrent.thread
 
 
@@ -25,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.e("p","main")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -56,8 +53,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
         //swipe down to refresh
         swipeRefreshLayout.setOnRefreshListener {
             thread {
@@ -74,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
 
         addBtn.setOnClickListener{
-
+            startActivity(Intent(this, InputTodo::class.java))
         }
 
 
