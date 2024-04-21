@@ -22,6 +22,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -112,30 +114,32 @@ class InputTodo : AppCompatActivity() {
             progressBar.visibility = View.VISIBLE
             val description:String = if(descriptionData.text.toString().trim().isNotEmpty()) descriptionData.text.toString() else "null"
             val progress:String = if(progressData.text.toString().trim().isNotEmpty()) progressData.text.toString() else "null"
+            val myformat = "yyyy-MM-dd"
+            val sdf = SimpleDateFormat(myformat, Locale.CHINA)
+            val created = sdf.format(Date())
 
+
+            val newTodoItem = Todo(
+                global_id = 1,
+                group = groupdata,
+                summary = summary,
+                description = description,
+                deadline = deadlinedata,
+                importance = importance_data,
+                finished = false,
+                created = created,
+                progress = progress,
+                shared = false
+            )
+
+            Handler(Looper.getMainLooper()).post {
+                if (deadlinedata == ""){newTodoItem.deadline = null}
+                val TodoDAO = TodoDB.getDatabase(MainActivity()).TodoDAO()
+                thread{TodoDAO.insert(newTodoItem)}.join()
+            }
 
             thread {
-                val myformat = "yyyy-MM-dd"
-                val sdf = SimpleDateFormat(myformat, Locale.CHINA)
-                val created = sdf.format(Date())
-                if(deadlinedata == null){
-                    deadlinedata = ""
-                }
-                Log.i("msg", deadlinedata)
-
-                val newTodoItem = Todo(
-                    global_id = 0,
-                    group = groupdata,
-                    summary = summary,
-                    description = description,
-                    deadline = deadlinedata,
-                    importance = importance_data,
-                    finished = false,
-                    created = created,
-                    progress = progress,
-                    shared = false
-                )
-
+                if (deadlinedata == ""){newTodoItem.deadline = ""}
                 UpdateTodo().postTodo("http://yesducky.com/api/todo/",  newTodoItem)
 
                 Handler(Looper.getMainLooper()).post {

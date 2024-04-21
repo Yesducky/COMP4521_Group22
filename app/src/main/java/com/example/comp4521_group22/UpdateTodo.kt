@@ -1,5 +1,7 @@
 package com.example.comp4521_group22
 
+import android.util.Log
+import android.widget.Toast
 import com.google.gson.Gson
 import okhttp3.Credentials
 import okhttp3.FormBody
@@ -11,22 +13,32 @@ import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
 class UpdateTodo {
+    //only 1 user allowed which is me, acc my name, pwd my tel no.
     private val credentials = Credentials.basic("leohong", "92816881")
-    fun getTodo(TodoDAO: TodoDAO){
-        lateinit var items: List<Todo>
-        val t1 = thread {
-                val JsonString = getJsonData("http://yesducky.com/api/todo/", credentials)
-                items = Gson().fromJson(JsonString, Array<Todo>::class.java).toList()
 
+    //get all the todo elements from online
+    fun getTodo(TodoDAO: TodoDAO):Boolean{
+        lateinit var items: List<Todo>
+        var JsonString: String = ""
+        val t1 = thread {
+            JsonString = getJsonData("http://yesducky.com/api/todo/", credentials)
+
+            if (JsonString != ""){
+                items = Gson().fromJson(JsonString, Array<Todo>::class.java).toList()
                 TodoDAO.deleteAll()
                 for(i in items){
                     TodoDAO.insert(i)
+                }
             }
         }
         t1.join()
-
+        if(JsonString == "Error"){
+            return false
+        }
+        return true
     }
 
+    //helper function to retrieve all elements from server db
     private fun getJsonData(url: String, credentials: String): String {
         val client = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
@@ -39,13 +51,23 @@ class UpdateTodo {
             .header("Authorization", credentials)
             .build()
 
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected code $response")
-            return response.body!!.string()
+        var r = ""
+        try {
+            client.newCall(request).execute().use { response ->
+                r = if (!response.isSuccessful) {
+                    ""
+                } else{
+                    response.body!!.string()
+                }
+            }
+        }catch (t: Throwable){
+            Log.e("TAG", "Caught unexpected Throwable: ${t.message}", t)
         }
+        return r
     }
 
-    fun postTodo(url: String, item: Todo): String {
+    //post a todo item
+    fun postTodo(url: String, item: Todo):Boolean {
         val client = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
@@ -70,13 +92,20 @@ class UpdateTodo {
             .post(postbody)
             .build()
 
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected code $response")
-            return response.toString()
+        var connection_success: Boolean = true
+        try {
+            client.newCall(request).execute().use { response ->
+                response.body!!.string()
+            }
+        }catch (t: Throwable){
+            Log.e("TAG", "Caught unexpected Throwable: ${t.message}", t)
+            connection_success = false
         }
+        return connection_success
     }
 
-    fun putTodo(url: String, item: Todo): String {
+    //change a todo item
+    fun putTodo(url: String, item: Todo):Boolean {
         val client = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
@@ -100,13 +129,19 @@ class UpdateTodo {
             .put(putbody)
             .build()
 
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected code $response")
-            return response.toString()
+        var connection_success = true
+        try {
+            client.newCall(request).execute().use { response ->
+                response.body!!.string()
+            }
+        }catch (t: Throwable){
+            Log.e("TAG", "Caught unexpected Throwable: ${t.message}", t)
+            connection_success = false
         }
+        return connection_success
     }
 
-    fun deleteTodo(url: String): String {
+    fun deleteTodo(url: String):Boolean {
         val client = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
@@ -120,9 +155,15 @@ class UpdateTodo {
             .delete()
             .build()
 
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected code $response")
-            return response.toString()
+        var connection_success = true
+        try {
+            client.newCall(request).execute().use { response ->
+                response.body!!.string()
+            }
+        }catch (t: Throwable){
+//            Toast.makeText(MainActivity(), t.message, Toast.LENGTH_LONG).show()
+            connection_success = false
         }
+        return connection_success
     }
 }

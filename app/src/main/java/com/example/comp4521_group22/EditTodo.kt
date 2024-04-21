@@ -160,7 +160,6 @@ class EditTodo : AppCompatActivity() {
                 )
 
                 val json = UpdateTodo().putTodo("http://yesducky.com/api/todo/" + "$ID"+"/", updatedTodo)
-                Log.e("msg", json)
 
                 Handler(Looper.getMainLooper()).post {
                     startActivity(Intent(this, MainActivity::class.java))
@@ -176,8 +175,7 @@ class EditTodo : AppCompatActivity() {
 
 
             thread {
-                val json = UpdateTodo().deleteTodo("http://yesducky.com/api/todo/" + "$ID"+"/")
-                Log.e("msg", json)
+                UpdateTodo().deleteTodo("http://yesducky.com/api/todo/" + "$ID"+"/")
 
                 Handler(Looper.getMainLooper()).post {
                     startActivity(Intent(this, MainActivity::class.java))

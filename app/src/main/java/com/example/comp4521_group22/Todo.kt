@@ -24,7 +24,7 @@ data class Todo(
     val created:String?,
 
     @ColumnInfo(name = "deadline")
-    val deadline:String?,
+    var deadline:String?,
 
     @ColumnInfo(name = "progress")
     val progress:String?,

@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.e("p","main")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -45,11 +44,13 @@ class MainActivity : AppCompatActivity() {
         thread {
             swipeRefreshLayout.isRefreshing = true
             val TodoDAO = TodoDB.getDatabase(this).TodoDAO()
-            UpdateTodo().getTodo(TodoDAO)
-            listAdapter.ls = TodoDAO.getAll()
-            Handler(Looper.getMainLooper()).post {
-                listAdapter.notifyDataSetChanged()
-                swipeRefreshLayout.isRefreshing = false
+
+            if(UpdateTodo().getTodo(TodoDAO)) {
+                listAdapter.ls = TodoDAO.getAll()
+                Handler(Looper.getMainLooper()).post {
+                    listAdapter.notifyDataSetChanged()
+                    swipeRefreshLayout.isRefreshing = false
+                }
             }
         }
 
@@ -65,6 +66,25 @@ class MainActivity : AppCompatActivity() {
                     swipeRefreshLayout.isRefreshing = false
                 }
             }
+
+            //debug
+            val t1 = thread {
+                val temp = TodoDB.getDatabase(this).TodoDAO().getAll()
+                for (i in temp){
+                    val msg = i.id.toString()
+                    Log.i(msg,"global_id = ${i.global_id},\n" +
+                            "group = ${i.group},\n" +
+                            "summary = ${i.summary},\n" +
+                            "description = ${i.description},\n" +
+                            "created = ${i.created},\n" +
+                            "deadline = ${i.deadline},\n" +
+                            "progress = ${i.progress},\n" +
+                            "importance = ${i.importance},\n" +
+                            "shared = ${i.shared},\n" +
+                            "finished = ${i.finished}")
+                }
+            }
+            t1.join()
         }
 
 
@@ -74,23 +94,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-//        val t1 = thread {
-//            val temp = TodoDB.getDatabase(this).TodoDAO().getAll()
-//            for (i in temp){
-//                val msg = i.id.toString()
-//                Log.i(msg,"global_id = ${i.global_id},\n" +
-//                        "group = ${i.group},\n" +
-//                        "summary = ${i.summary},\n" +
-//                        "description = ${i.description},\n" +
-//                        "created = ${i.created},\n" +
-//                        "deadline = ${i.deadline},\n" +
-//                        "progress = ${i.progress},\n" +
-//                        "importance = ${i.importance},\n" +
-//                        "shared = ${i.shared},\n" +
-//                        "finished = ${i.finished}")
-//            }
-//        }
-//        t1.join()
+
 
 
 
