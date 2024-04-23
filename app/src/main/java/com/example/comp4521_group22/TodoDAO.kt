@@ -34,4 +34,15 @@ interface TodoDAO {
     @Query("SELECT * FROM todo WHERE global_id=:globalId ")
     fun get(globalId:Int):Todo
 
+    @Query("SELECT importance FROM Todo WHERE deadline LIKE :datePattern ORDER BY importance DESC")
+    fun getImportanceBySpecificDate(datePattern: String): List<Int>
+
+    @Query("SELECT * FROM Todo WHERE deadline LIKE :datePattern ORDER BY importance DESC")
+    fun getBySpecificDate(datePattern: String): List<Todo>
+    fun buildDatePattern(day: Int, month: Int, year: Int): String{
+        val formattedDay = if (day < 10) "0$day" else "$day"
+        val formattedMonth = if (month < 10) "0$month" else "$month"
+        return "%$year-$formattedMonth-$formattedDay%"
+    }
+
 }

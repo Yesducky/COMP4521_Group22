@@ -202,7 +202,7 @@
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:backgroundTint="#AEFF74"
-            android:text="@string/submit" />
+            android:text="Put" />
 
     </LinearLayout>
 
