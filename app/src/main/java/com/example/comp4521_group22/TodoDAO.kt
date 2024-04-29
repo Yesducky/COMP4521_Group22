@@ -19,7 +19,7 @@ interface TodoDAO {
     @Delete
     fun delete(todo: Todo)
 
-    @Query("SELECT * FROM Todo ORDER BY id ASC")
+    @Query("SELECT * FROM Todo ORDER BY deadline ASC")
     fun getAll(): List<Todo>
 
     @Insert

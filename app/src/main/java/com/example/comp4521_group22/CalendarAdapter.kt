@@ -10,8 +10,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.time.Month
 import kotlin.concurrent.thread
 
@@ -38,12 +40,12 @@ class CalendarAdapter(var dates: ArrayList<String>, var month: Int, var year: In
                 addColorDots(holder.impotance_list, todoImportanceList)
             }.join()
             holder.itemView.setOnClickListener{
-                val intent = Intent(holder.itemView.context, TodoListView::class.java)
-                intent.putExtra("mode", 1)
-                intent.putExtra("date", dates[position].toInt())
-                intent.putExtra("month", month)
-                intent.putExtra("year", year)
-                ContextCompat.startActivity(holder.itemView.context, intent, null)
+                (holder.itemView.context as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottom_nav).selectedItemId = R.id.menu_list_view
+                val newFragment = FragmentList.newInstance(1, dates[position].toInt(), month, year)
+                (holder.itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.flFragment, newFragment)
+                    commit()
+                }
             }
         }
     }

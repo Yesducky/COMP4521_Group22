@@ -57,6 +57,7 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("com.google.android.material:material:1.2.0-alpha05")
 
 }
 

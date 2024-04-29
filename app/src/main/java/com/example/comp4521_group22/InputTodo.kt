@@ -51,12 +51,7 @@ class InputTodo : AppCompatActivity() {
         }
         val backBtn = findViewById<TextView>(R.id.btnBack)
         backBtn.setOnClickListener{
-            if(from == "calendar"){
-                startActivity(Intent(this, CalendarView::class.java))
-            }
-            else{
-                startActivity(Intent(this, MainActivity::class.java))
-            }
+            startActivity(Intent(this, MainActivity::class.java))
         }
 
 

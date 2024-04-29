@@ -1,12 +1,14 @@
 package com.example.comp4521_group22
 
 import android.annotation.SuppressLint
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,27 +16,28 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.concurrent.thread
+import kotlin.math.abs
 
 
 class TodoListView : AppCompatActivity() {
 
     private lateinit var rvList: RecyclerView
     private lateinit var listAdapter: ListAdapter
+    private lateinit var gestureDetector: GestureDetector
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_todo_list_view)
 
-        val addBtn = findViewById<FloatingActionButton>(R.id.activity_main_add_button)
+        val addBtn = findViewById<FloatingActionButton>(R.id.fragment_list_add_button)
         val swipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.container)
-        val activity_main_bottom_button = findViewById<TextView>(R.id.activity_main_bottom_button)
+        val activity_main_bottom_button = findViewById<ImageButton>(R.id.list_view_bottom_button)
+        val list_date = findViewById<TextView>(R.id.list_date)
         val TodoDAO = TodoDB.getDatabase(MainActivity()).TodoDAO()
         val mode = intent.getIntExtra("mode",0)
 
@@ -46,10 +49,12 @@ class TodoListView : AppCompatActivity() {
         val month = intent.getIntExtra("month", 1)
         val year = intent.getIntExtra("year", 1)
         var datePattern = ""
-        var title = "List"
+        var title = ""
         if(mode == 1){
             datePattern = TodoDAO.buildDatePattern(date,month,year)
             title = "$date/$month/$year"
+            list_date.visibility = View.VISIBLE
+            list_date.text = title
         }
 
         CoroutineScope(Main).launch {
@@ -61,7 +66,6 @@ class TodoListView : AppCompatActivity() {
                 else if (mode == 1){
                     listAdapter = ListAdapter(TodoDAO.getBySpecificDate(datePattern))
                 }
-                activity_main_bottom_button.text = title
             }
             rvList.adapter = listAdapter
             withContext(IO) {
@@ -111,6 +115,27 @@ class TodoListView : AppCompatActivity() {
         activity_main_bottom_button.setOnClickListener {
             startActivity(Intent(this, CalendarView::class.java))
         }
+
+        //swipe to calendar view
+        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(
+                e1: MotionEvent?,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                if (e1 != null) {
+                    if (e1.x - e2.x > 100 && abs(velocityX) > 200) {
+                        // Right swipe detected
+                        val intent = Intent(this@TodoListView, CalendarView::class.java)
+                        val animation = ActivityOptions.makeCustomAnimation(this@TodoListView, R.anim.slide_in_right, R.anim.slide_out_left)
+                        startActivity(intent,animation.toBundle())
+                    }
+                }
+                return super.onFling(e1, e2, velocityX, velocityY)
+            }
+        })
+        rvList.setOnTouchListener { _, event -> gestureDetector.onTouchEvent(event) }
 
             //debug
 //            val t1 = thread {
