@@ -6,28 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.annotation.SuppressLint
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.widget.ImageButton
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.LocalDate
 import java.time.YearMonth
-import kotlin.math.abs
 import kotlin.properties.Delegates
 
 
@@ -41,7 +31,6 @@ class FragmentCalendar : Fragment() {
     private lateinit var cur_month_date:LocalDate
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var tv_month_year:TextView
-    private lateinit var gestureDetector: GestureDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +57,7 @@ class FragmentCalendar : Fragment() {
         //add new Todo button
         addBtn.setOnClickListener{
             val intent = Intent(activity, InputTodo::class.java)
-            intent.putExtra("from", "calendar");
+            intent.putExtra("from", "calendar")
             startActivity(intent)
         }
 
@@ -138,13 +127,4 @@ class FragmentCalendar : Fragment() {
         return daysInMonthArray
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance() =
-            FragmentCalendar().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
 }

@@ -9,8 +9,6 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -19,10 +17,13 @@ class MainActivity : AppCompatActivity() {
         val fragmentCalendar = FragmentCalendar()
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
 
+        //init database
         thread {TodoDB.getDatabase(this) }.join()
 
+        //set the main fragment
         setCurrentFragment(fragmentList)
 
+        //bottom navigation bar
         bottomNav.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.menu_list_view -> setCurrentFragment(fragmentList)
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //same as lecture notes
     fun setCurrentFragment(fragment: Fragment) = supportFragmentManager.beginTransaction().apply {
         replace(R.id.flFragment, fragment)
         commit()

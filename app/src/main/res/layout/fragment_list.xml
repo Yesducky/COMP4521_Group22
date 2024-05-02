@@ -12,8 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:foregroundTint="#F6F6F6"
-        android:orientation="vertical"
-        tools:context=".TodoListView">
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#000000"
-                android:text="All"
+                android:text="@string/all"
                 android:textAlignment="center"
                 android:textColor="#F6F6F6"
                 android:textSize="34sp"
@@ -63,5 +62,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 </FrameLayout>

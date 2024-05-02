@@ -3,7 +3,6 @@ package com.example.comp4521_group22
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,14 +40,16 @@ class FragmentList : Fragment() {
         val TodoDAO = TodoDB.getDatabase(MainActivity()).TodoDAO()
         val tvDate = view.findViewById<TextView>(R.id.fragment_list_date)
 
+        //get the requested date
+        //Usage: click on a date in calendar view, it transacts to here with dates provided
+        //mode: 0 <- all, 1 <- specific date
+        val mode = arguments?.getInt("mode", 0) ?: 0
         val date = arguments?.getInt("date", 0) ?: 0
         val month = arguments?.getInt("month", 0) ?: 0
         val year = arguments?.getInt("year", 0) ?: 0
-        val mode = arguments?.getInt("mode", 0) ?: 0
-        Log.e("mode", mode.toString())
-        Log.e("year", year.toString())
 
-        //init todo list
+
+        //set header date string
         rvList = view.findViewById(R.id.fragment_list_recycler_view)
         val layoutManager = GridLayoutManager(context, 1)
         rvList.layoutManager = layoutManager
@@ -58,6 +59,7 @@ class FragmentList : Fragment() {
             tvDate.text = "$date/$month/$year"
         }
 
+        //init list
         CoroutineScope(Main).launch {
             swipeRefreshLayout.isRefreshing = true
             withContext(IO) {
@@ -81,8 +83,6 @@ class FragmentList : Fragment() {
             swipeRefreshLayout.isRefreshing = false
         }
 
-
-
         //swipe down to refresh
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
@@ -102,13 +102,15 @@ class FragmentList : Fragment() {
             }
         }
 
-        //add new Todo button
+        //add button
         addBtn.setOnClickListener {
             val intent = Intent(activity, InputTodo::class.java)
-            intent.putExtra("inputCalendarMode", 1)
-            intent.putExtra("date", date)
-            intent.putExtra("month", month)
-            intent.putExtra("year", year)
+            if(mode == 1){
+                intent.putExtra("inputCalendarMode", 1)
+                intent.putExtra("date", date)
+                intent.putExtra("month", month)
+                intent.putExtra("year", year)
+            }
             activity?.startActivity(intent)
         }
 
