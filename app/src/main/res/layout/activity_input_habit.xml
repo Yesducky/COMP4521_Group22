@@ -1,10 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InputHabit">
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:textAlignment="center"
+    tools:context=".InputTodo">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4E4E4E"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingStart="10dp"
+            android:text="@string/back"
+            android:textColor="#C1C1C1"
+            app:autoSizeTextType="uniform"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:text="@string/entry"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            app:autoSizeTextType="uniform" />
+
+        <TextView
+            android:id="@+id/btnHabit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingEnd="10dp"
+            android:text="@string/habit"
+            android:textAlignment="viewEnd"
+            android:textColor="#AEAEAE"
+            app:autoSizeTextType="uniform"
+            tools:ignore="RtlSymmetry" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/habit_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="#EAEAEA"
+        android:ems="10"
+        android:hint="Habit Name"
+        android:inputType="text"
+        android:paddingStart="20dp"
+        android:textColor="#000000"
+        android:textColorHint="#616161"
+        android:textSize="40sp"
+        tools:ignore="RtlSymmetry"
+        android:autofillHints="@string/new_task" />
+
+    <EditText
+        android:id="@+id/habit_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="25dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Habit Description"
+        android:inputType="textMultiLine"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColorHint="#787878"
+        android:textSize="20sp"
+        android:autofillHints="@string/description" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="20dp"
+        tools:ignore="RtlSymmetry">
+
+        <TextView
+            android:id="@+id/habit_deadline_tv"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="0dp"
+            android:layout_weight="1"
+            android:text="@string/deadline"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/habit_deadline_datepicker_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/habit_datepickerbutton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/datepicker"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/baseline_date_range_24" />
+    </LinearLayout>
+
+
+
+    <EditText
+        android:id="@+id/habit_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Target"
+        android:inputType="textMultiLine"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColorHint="#787878"
+        android:textSize="20sp"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/habit_frequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Enter frequency (days)"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColorHint="#787878"
+        android:textSize="20sp"
+        android:autofillHints="" />
+
+
+    <TextView
+        android:id="@+id/textViewRepeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Repeat"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="#000000" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <!-- Top row with four checkboxes -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/checkbox_mon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Mon"
+                android:checked="false" />
+
+            <CheckBox
+                android:id="@+id/checkbox_tue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tue"
+                android:checked="false" />
+
+            <CheckBox
+                android:id="@+id/checkbox_wed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Wed"
+                android:checked="false" />
+
+            <CheckBox
+                android:id="@+id/checkbox_thur"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Thu"
+                android:checked="false" />
+        </LinearLayout>
+
+        <!-- Bottom row with three checkboxes -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <CheckBox
+                android:id="@+id/checkbox_fri"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fri"
+                android:checked="false" />
+
+            <CheckBox
+                android:id="@+id/checkbox_sat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sat"
+                android:checked="false" />
+
+            <CheckBox
+                android:id="@+id/checkbox_sun"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sun"
+                android:checked="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:paddingLeft="25dp"-->
+<!--        android:paddingRight="25dp">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/todo_importance_tv"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="@string/importance"-->
+<!--            android:textAlignment="viewStart"-->
+<!--            android:textSize="20sp" />-->
+
+<!--        <RadioGroup-->
+<!--            android:id="@+id/todo_importance"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/todo_importance_0"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:height="48dp"-->
+<!--                android:background="#8BC34A"-->
+<!--                android:checked="true" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/todo_importance_1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="#FFEB3B" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/todo_importance_2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="#F44336" />-->
+<!--        </RadioGroup>-->
+<!--    </LinearLayout>-->
+
+    <Button
+        android:id="@+id/habit_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Add Habit" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+</LinearLayout>
