@@ -25,13 +25,16 @@ data class Habit(
     val created:String?,
 
     @ColumnInfo(name = "interval")
-    val interval:List<Int> = listOf(0,0,0,0,0,0,0), //mon to sun
+    val interval:String?, //mon to sun
 
     @ColumnInfo(name = "frequency")
-    val frequency:String,
+    val frequency:Int,
 
     @ColumnInfo(name = "progress")
-    val progress:String,
+    val progress:Int,
+
+    @ColumnInfo(name = "importance")
+    val importance:Int,
 
     @ColumnInfo(name = "shared")
     val shared:Boolean,

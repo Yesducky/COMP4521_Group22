@@ -24,66 +24,86 @@ import java.util.Date
 import java.util.Locale
 import kotlin.concurrent.thread
 
-
-class InputHabit : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+class EditHabit : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_input_habit)
+        setContentView(R.layout.activity_edit_habit)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
+        val ID = intent.getIntExtra("habitID", -1)
+
         val backBtn = findViewById<TextView>(R.id.edit_habit_btnBack)
         backBtn.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
-        val todobtn = findViewById<TextView>(R.id.edit_habit_id)
-        todobtn.setOnClickListener{
-            startActivity(Intent(this, InputHabit::class.java))
-        }
+        val habitID = findViewById<TextView>(R.id.edit_habit_id)
+        habitID.text = ID.toString()
 
         val groupdata = "1"
-
-
-        val habitsummary = findViewById<EditText>(R.id.habit_summary)
-        val descriptionData = findViewById<EditText>(R.id.habit_description)
-        val frequency = findViewById<EditText>(R.id.habit_frequency)
-        val postbutton = findViewById<Button>(R.id.edit_habit_submit)
+        val habitsummary = findViewById<EditText>(R.id.edit_habit_summary)
+        val descriptionData = findViewById<EditText>(R.id.edit_habit_description)
+        val frequency = findViewById<EditText>(R.id.edit_habit_frequency)
+        val progress = findViewById<EditText>(R.id.edit_habit_progress)
+        val putbutton = findViewById<Button>(R.id.edit_habit_submit)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        val monTog = findViewById<CheckBox>(R.id.checkbox_mon)
-        val tueTog = findViewById<CheckBox>(R.id.checkbox_tue)
-        val wedTog = findViewById<CheckBox>(R.id.checkbox_wed)
-        val thurTog = findViewById<CheckBox>(R.id.checkbox_thur)
-        val friTog = findViewById<CheckBox>(R.id.checkbox_fri)
-        val satTog = findViewById<CheckBox>(R.id.checkbox_sat)
-        val sunTog = findViewById<CheckBox>(R.id.checkbox_sun)
-        val btnLeft = findViewById<ImageButton>(R.id.habit_btn_left)
-        val btnRight = findViewById<ImageButton>(R.id.habit_btn_right)
+        val monTog = findViewById<CheckBox>(R.id.edit_checkbox_mon)
+        val tueTog = findViewById<CheckBox>(R.id.edit_checkbox_tue)
+        val wedTog = findViewById<CheckBox>(R.id.edit_checkbox_wed)
+        val thurTog = findViewById<CheckBox>(R.id.edit_checkbox_thur)
+        val friTog = findViewById<CheckBox>(R.id.edit_checkbox_fri)
+        val satTog = findViewById<CheckBox>(R.id.edit_checkbox_sat)
+        val sunTog = findViewById<CheckBox>(R.id.edit_checkbox_sun)
+        val btnLeft = findViewById<ImageButton>(R.id.edit_habit_btn_left)
+        val btnRight = findViewById<ImageButton>(R.id.edit_habit_btn_right)
+        val deleteButton = findViewById<Button>(R.id.edit_habit_delete)
 
+        val btnLeftProgress = findViewById<ImageButton>(R.id.edit_habit_btn_left_p)
+        val btnRightProgress = findViewById<ImageButton>(R.id.edit_habit_btn_right_p)
+        var daysStates = mutableListOf(1, 1, 1, 1, 1, 1, 1)
 
-        val daysStates = mutableListOf(1, 1, 1, 1, 1, 1, 1)
+        //get data from local room db
+        Handler(Looper.getMainLooper()).post {
+            val HabitDao = HabitDB.getDatabase(MainActivity()).habitDao()
+            lateinit var CurrentHabitItem: Habit
+            thread { CurrentHabitItem = HabitDao.getHabitById(ID) }.join()
 
-        val mode = intent.getIntExtra("inputCalendarMode", 0)
-        if (mode == 1) {
-            val date = intent.getIntExtra("date", 0)
-            val month = intent.getIntExtra("month", 0)
-            val year = intent.getIntExtra("year", 0)
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE)
-            val calendar = Calendar.getInstance()
-            calendar.set(year, month - 1, date)
+            habitsummary.setText(CurrentHabitItem.summary)
+            descriptionData.setText(if (CurrentHabitItem.description != "null") CurrentHabitItem.description else "")
+
+            progress.setText(CurrentHabitItem.progress.toString())
+            frequency.setText(CurrentHabitItem.frequency.toString())
+
+            daysStates = CurrentHabitItem.interval?.removeSurrounding("[", "]")
+                ?.split(",")?.map { it.trim().toInt() }?.toMutableList()!!
+
+            val lsOfCheckboxes = listOf(monTog,tueTog,wedTog,thurTog,friTog,satTog,sunTog)
+            for (i in 0..6){
+                lsOfCheckboxes[i].isChecked = daysStates[i] == 1
+            }
         }
 
-        btnLeft.setOnClickListener(){
-            frequency.setText((frequency.text.toString().toInt()-1).toString())
+
+        btnLeft.setOnClickListener() {
+            frequency.setText((frequency.text.toString().toInt() - 1).toString())
         }
 
-        btnRight.setOnClickListener(){
-            frequency.setText((frequency.text.toString().toInt()+1).toString())
+        btnRight.setOnClickListener() {
+            frequency.setText((frequency.text.toString().toInt() + 1).toString())
+        }
+
+        btnLeftProgress.setOnClickListener() {
+            progress.setText((progress.text.toString().toInt() - 1).toString())
+        }
+
+        btnRightProgress.setOnClickListener() {
+            progress.setText((progress.text.toString().toInt() + 1).toString())
         }
 
 
@@ -110,8 +130,7 @@ class InputHabit : AppCompatActivity() {
         }
 
 
-        postbutton.setOnClickListener {
-
+        putbutton.setOnClickListener {
             //check summary if empty
             var summary: String = ""
             val interval_days = daysStates.toString()
@@ -129,7 +148,7 @@ class InputHabit : AppCompatActivity() {
             }
 
             //loading effect
-            postbutton.visibility = View.GONE
+            putbutton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
 
             //data collection
@@ -139,30 +158,31 @@ class InputHabit : AppCompatActivity() {
             val myformat = "yyyy-MM-dd"
             val sdf = SimpleDateFormat(myformat, Locale.CHINA)
             val created = sdf.format(Date())
-            val newHabitItem = Habit(
-                global_id = 1,
+            val habitItem = Habit(
+                global_id = ID,
                 group = groupdata,
                 summary = summary,
                 description = description,
                 interval = interval_days,
                 finished = false,
                 created = created,
-                progress = 0,
+                progress = progress.text.toString().toInt(),
                 importance = 0,
                 shared = false,
                 frequency = frequency.text.toString().toInt()
             )
 
-
             Handler(Looper.getMainLooper()).post {
                 val habitDao = HabitDB.getDatabase(MainActivity()).habitDao()
                 thread {
-                    habitDao.insertHabit(newHabitItem)
+                    habitDao.deleteAHabit(ID)
+                    habitDao.insertHabit(habitItem)
                 }.join()  // Ensure the database operation completes
 
                 // Save to remote server
                 thread {
-                    UpdateHabit().postHabit("http://yesducky.com/api/habit/", newHabitItem)
+                    //upload data
+                    UpdateHabit().putHabit("http://yesducky.com/api/habit/" + "$ID"+"/", habitItem)
 
                     // Navigate back to the main activity
                     Handler(Looper.getMainLooper()).post {
@@ -170,10 +190,25 @@ class InputHabit : AppCompatActivity() {
                         finish()  // Close this activity
                     }
                 }
-
             }
 
         }
 
+        deleteButton.setOnClickListener{
+            //loading effect
+            putbutton.visibility = View.GONE
+            deleteButton.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+
+            //send delete request to the server
+            thread {
+                UpdateHabit().deleteHabit("http://yesducky.com/api/habit/" + "$ID"+"/")
+
+                Handler(Looper.getMainLooper()).post {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+            }
+        }
     }
 }

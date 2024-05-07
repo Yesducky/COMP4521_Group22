@@ -20,20 +20,22 @@ interface HabitDAO {
     fun deleteHabit(habit: Habit)
 
     @Query("SELECT * FROM Habit")
-    fun getAllHabits(): Flow<List<Habit>>
+    fun getAllHabits(): MutableList<Habit>
 
-    @Query("SELECT * FROM Habit WHERE id = :habitId")
-    fun getHabitById(habitId: Int): Flow<Habit>
+    @Query("SELECT * FROM Habit WHERE global_id = :habitId")
+    fun getHabitById(habitId: Int): Habit
 
     @Query("SELECT * FROM Habit WHERE finished = :status")
-    fun getHabitsByStatus(status: Boolean): Flow<List<Habit>>
+    fun getHabitsByStatus(status: Boolean): List<Habit>
 
     @Query("DELETE FROM Habit")
     fun deleteAllHabits()
 
+    @Query("DELETE FROM Habit WHERE global_id = :habitId")
+    fun deleteAHabit(habitId: Int)
     @Query("SELECT * FROM Habit WHERE frequency = :frequency")
-    fun getHabitsByFrequency(frequency: Int): Flow<List<Habit>>
+    fun getHabitsByFrequency(frequency: Int): List<Habit>
 
     @Query("SELECT * FROM Habit WHERE created BETWEEN :startDate AND :endDate")
-    fun getHabitsByCreationDateRange(startDate: String, endDate: String): Flow<List<Habit>>
+    fun getHabitsByCreationDateRange(startDate: String, endDate: String): List<Habit>
 }

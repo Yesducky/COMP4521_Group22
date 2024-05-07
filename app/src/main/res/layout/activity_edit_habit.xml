@@ -8,7 +8,7 @@
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:textAlignment="center"
-    tools:context=".InputTodo">
+    tools:context=".EditTodo">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_weight="2"
-            android:text="@string/entry"
+            android:text="@string/edit"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             app:autoSizeTextType="uniform" />
@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingEnd="10dp"
-            android:text="Todo"
+            android:text="@string/_00"
             android:textAlignment="viewEnd"
             android:textColor="#AEAEAE"
             app:autoSizeTextType="uniform"
@@ -52,7 +52,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/habit_summary"
+        android:id="@+id/edit_habit_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -69,7 +69,7 @@
         tools:ignore="RtlSymmetry" />
 
     <EditText
-        android:id="@+id/habit_description"
+        android:id="@+id/edit_habit_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -84,6 +84,61 @@
         android:textColorHint="#787878"
         android:textSize="20sp"
         android:autofillHints="@string/description" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="80dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingStart="5dp"
+            android:paddingEnd="7dp"
+            android:text="Progress: "
+            app:autoSizeTextType="uniform" />
+
+        <ImageButton
+            android:id="@+id/edit_habit_btn_left_p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/baseline_arrow_left_24" />
+
+        <EditText
+            android:id="@+id/edit_habit_progress"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:backgroundTint="#5A0000"
+            android:backgroundTintMode="add"
+            android:ems="10"
+            android:inputType="number"
+            android:text="1"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/edit_habit_btn_right_p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/baseline_arrow_right_24" />
+    </LinearLayout>
 
 
     <LinearLayout
@@ -105,7 +160,7 @@
             app:autoSizeTextType="uniform" />
 
         <ImageButton
-            android:id="@+id/habit_btn_left"
+            android:id="@+id/edit_habit_btn_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -115,7 +170,7 @@
             app:srcCompat="@drawable/baseline_arrow_left_24" />
 
         <EditText
-            android:id="@+id/habit_frequency"
+            android:id="@+id/edit_habit_frequency"
             android:layout_width="68dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#5A0000"
@@ -129,7 +184,7 @@
             android:autofillHints="" />
 
         <ImageButton
-            android:id="@+id/habit_btn_right"
+            android:id="@+id/edit_habit_btn_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -180,7 +235,7 @@
                     android:textAlignment="center" />
 
                 <CheckBox
-                    android:id="@+id/checkbox_mon"
+                    android:id="@+id/edit_checkbox_mon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -202,7 +257,7 @@
                     android:textAlignment="center" />
 
                 <CheckBox
-                    android:id="@+id/checkbox_tue"
+                    android:id="@+id/edit_checkbox_tue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -224,7 +279,7 @@
                     android:textAlignment="center" />
 
                 <CheckBox
-                    android:id="@+id/checkbox_wed"
+                    android:id="@+id/edit_checkbox_wed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -246,7 +301,7 @@
                     android:textAlignment="center" />
 
                 <CheckBox
-                    android:id="@+id/checkbox_thur"
+                    android:id="@+id/edit_checkbox_thur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -268,7 +323,7 @@
                     android:textAlignment="center" />
 
                 <CheckBox
-                    android:id="@+id/checkbox_fri"
+                    android:id="@+id/edit_checkbox_fri"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -290,7 +345,7 @@
                     android:textAlignment="center" />
 
                 <CheckBox
-                    android:id="@+id/checkbox_sat"
+                    android:id="@+id/edit_checkbox_sat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -311,68 +366,74 @@
                     android:textAlignment="center" />
 
                 <CheckBox
-                    android:id="@+id/checkbox_sun"
+                    android:id="@+id/edit_checkbox_sun"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Bottom row with three checkboxes -->
+        <!-- Bottom row with three edit_checkboxes -->
     </LinearLayout>
 
 
 
     <!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:paddingLeft="25dp"-->
-<!--        android:paddingRight="25dp">-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:paddingLeft="25dp"-->
+    <!--        android:paddingRight="25dp">-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/todo_importance_tv"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:text="@string/importance"-->
-<!--            android:textAlignment="viewStart"-->
-<!--            android:textSize="20sp" />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/todo_importance_tv"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:text="@string/importance"-->
+    <!--            android:textAlignment="viewStart"-->
+    <!--            android:textSize="20sp" />-->
 
-<!--        <RadioGroup-->
-<!--            android:id="@+id/todo_importance"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:orientation="horizontal">-->
+    <!--        <RadioGroup-->
+    <!--            android:id="@+id/todo_importance"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:orientation="horizontal">-->
 
-<!--            <RadioButton-->
-<!--                android:id="@+id/todo_importance_0"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:height="48dp"-->
-<!--                android:background="#8BC34A"-->
-<!--                android:checked="true" />-->
+    <!--            <RadioButton-->
+    <!--                android:id="@+id/todo_importance_0"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:height="48dp"-->
+    <!--                android:background="#8BC34A"-->
+    <!--                android:checked="true" />-->
 
-<!--            <RadioButton-->
-<!--                android:id="@+id/todo_importance_1"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="#FFEB3B" />-->
+    <!--            <RadioButton-->
+    <!--                android:id="@+id/todo_importance_1"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:background="#FFEB3B" />-->
 
-<!--            <RadioButton-->
-<!--                android:id="@+id/todo_importance_2"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="#F44336" />-->
-<!--        </RadioGroup>-->
-<!--    </LinearLayout>-->
+    <!--            <RadioButton-->
+    <!--                android:id="@+id/todo_importance_2"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:background="#F44336" />-->
+    <!--        </RadioGroup>-->
+    <!--    </LinearLayout>-->
 
     <Button
         android:id="@+id/edit_habit_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Add Habit" />
+        android:text="Modify" />
+
+    <Button
+        android:id="@+id/edit_habit_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/delete" />
 
     <ProgressBar
         android:id="@+id/progressBar"

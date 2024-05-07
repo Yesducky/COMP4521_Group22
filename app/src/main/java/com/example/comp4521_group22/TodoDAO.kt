@@ -13,7 +13,7 @@ interface TodoDAO {
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun InsertAll(vararg todo: Todo)
 
-    @Update
+    @Update()
     fun update(todo: Todo)
 
     @Delete
@@ -22,7 +22,7 @@ interface TodoDAO {
     @Query("SELECT * FROM Todo ORDER BY deadline ASC")
     fun getAll(): List<Todo>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(todo: Todo): Long
 
     @Query("DELETE FROM Todo")
@@ -34,11 +34,15 @@ interface TodoDAO {
     @Query("SELECT * FROM todo WHERE global_id=:globalId ")
     fun get(globalId:Int):Todo
 
+    @Query("DELETE FROM todo WHERE global_id = :globalId")
+    fun deleteATodo(globalId: Int)
+
     @Query("SELECT importance FROM Todo WHERE deadline LIKE :datePattern ORDER BY importance DESC")
     fun getImportanceBySpecificDate(datePattern: String): List<Int>
 
-    @Query("SELECT * FROM Todo WHERE deadline LIKE :datePattern ORDER BY importance DESC")
+    @Query("SELECT * FROM Todo WHERE deadline LIKE :datePattern OR deadline IS NULL ORDER BY importance DESC")
     fun getBySpecificDate(datePattern: String): List<Todo>
+
     fun buildDatePattern(day: Int, month: Int, year: Int): String{
         val formattedDay = if (day < 10) "0$day" else "$day"
         val formattedMonth = if (month < 10) "0$month" else "$month"

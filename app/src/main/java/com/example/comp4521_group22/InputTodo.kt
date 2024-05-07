@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.DatePicker
@@ -22,8 +21,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -45,13 +42,14 @@ class InputTodo : AppCompatActivity() {
         }
 
         //nav
-        val from: String? = intent.getStringExtra("from")
-        if (from != null) {
-            Log.e("msg",from)
-        }
-        val backBtn = findViewById<TextView>(R.id.btnBack)
+        val backBtn = findViewById<TextView>(R.id.edit_habit_btnBack)
         backBtn.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        val habitbtn = findViewById<TextView>(R.id.btnHabit)
+        habitbtn.setOnClickListener{
+            startActivity(Intent(this, InputHabit::class.java))
         }
 
 

@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 // Declare the database, note the inclusion of Habit.class and version number.
-@Database(entities = [Habit::class], version = 1, exportSchema = false)
+@Database(entities = [Habit::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class HabitDB : RoomDatabase() {
     // Abstract method to access the DAO
