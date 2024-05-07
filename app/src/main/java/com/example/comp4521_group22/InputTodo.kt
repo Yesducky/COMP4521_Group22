@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.DatePicker
@@ -22,8 +21,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -45,13 +42,14 @@ class InputTodo : AppCompatActivity() {
         }
 
         //nav
-        val from: String? = intent.getStringExtra("from")
-        if (from != null) {
-            Log.e("msg",from)
-        }
-        val backBtn = findViewById<TextView>(R.id.btnBack)
+        val backBtn = findViewById<TextView>(R.id.edit_habit_btnBack)
         backBtn.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        val habitbtn = findViewById<TextView>(R.id.btnHabit)
+        habitbtn.setOnClickListener{
+            startActivity(Intent(this, InputHabit::class.java))
         }
 
 
@@ -78,7 +76,7 @@ class InputTodo : AppCompatActivity() {
             val date = intent.getIntExtra("date",0)
             val month = intent.getIntExtra("month", 0)
             val year = intent.getIntExtra("year", 0)
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE)
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.UK)
             val calendar = Calendar.getInstance()
             calendar.set(year, month - 1, date)
             deadlinedata = sdf.format(calendar.time)
@@ -91,7 +89,7 @@ class InputTodo : AppCompatActivity() {
             override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
                 calendar.set(year, month, day)
                 val myformat = "yyyy-MM-dd"
-                val sdf = SimpleDateFormat(myformat, Locale.CHINA)
+                val sdf = SimpleDateFormat(myformat, Locale.UK)
                 deadlinedata = sdf.format(calendar.time)
                 tvdeadline.text = deadlinedata
             }
@@ -135,7 +133,7 @@ class InputTodo : AppCompatActivity() {
             val description:String = if(descriptionData.text.toString().trim().isNotEmpty()) descriptionData.text.toString() else "null"
             val progress:String = if(progressData.text.toString().trim().isNotEmpty()) progressData.text.toString() else "null"
             val myformat = "yyyy-MM-dd"
-            val sdf = SimpleDateFormat(myformat, Locale.CHINA)
+            val sdf = SimpleDateFormat(myformat, Locale.UK)
             val created = sdf.format(Date())
             val newTodoItem = Todo(
                 global_id = 1,

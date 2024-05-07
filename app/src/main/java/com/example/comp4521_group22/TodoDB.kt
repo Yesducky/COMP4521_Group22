@@ -25,8 +25,6 @@ abstract class TodoDB: RoomDatabase(){
                 instance
             }
         }
-
-
     }
 }
 

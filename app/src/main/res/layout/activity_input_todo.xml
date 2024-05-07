@@ -17,7 +17,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/btnBack"
+            android:id="@+id/edit_habit_btnBack"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -164,20 +164,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:height="48dp"
-                android:background="#8BC34A"
+                android:background="@drawable/border_green"
+                android:button="@null"
                 android:checked="true" />
 
             <RadioButton
                 android:id="@+id/todo_importance_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#FFEB3B" />
+                android:background="@drawable/border_orange"
+                android:button="@null" />
 
             <RadioButton
                 android:id="@+id/todo_importance_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#F44336" />
+                android:background="@drawable/border_red"
+                android:button="@null" />
         </RadioGroup>
     </LinearLayout>
 

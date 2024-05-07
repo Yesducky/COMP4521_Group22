@@ -12,22 +12,23 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
-class UpdateTodo {
+class UpdateHabit {
     //only 1 user allowed which is me, acc my name, pwd my tel no.
     private val credentials = Credentials.basic("leohong", "92816881")
 
-    //get all the to-do elements from online
-    fun getTodo(TodoDAO: TodoDAO):Boolean{
-        lateinit var items: List<Todo>
+    //get all the habit elements from online
+    fun getHabit(HabitDao: HabitDAO):Boolean{
+        lateinit var items: List<Habit>
         var JsonString: String = ""
         val t1 = thread {
-            JsonString = getJsonData("http://yesducky.com/api/todo/", credentials)
+            JsonString = getJsonData("http://yesducky.com/api/habit/", credentials)
 
             if (JsonString != ""){
-                items = Gson().fromJson(JsonString, Array<Todo>::class.java).toList()
-                TodoDAO.deleteAll()
+                items = Gson().fromJson(JsonString, Array<Habit>::class.java).toList()
+
+                HabitDao.deleteAllHabits()
                 for(i in items){
-                    TodoDAO.insert(i)
+                    HabitDao.insertHabit(i)
                 }
             }
         }
@@ -66,8 +67,8 @@ class UpdateTodo {
         return r
     }
 
-    //post a todo item
-    fun postTodo(url: String, item: Todo):Boolean {
+    //post a habit item
+    fun postHabit(url: String, item: Habit):Boolean {
         val client = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
@@ -79,8 +80,9 @@ class UpdateTodo {
             .add("summary", item.summary.toString())
             .add("description", item.description.toString())
             .add("created", item.created.toString())
-            .add("deadline", item.deadline.toString())
-            .add("progress",item.progress.toString())
+            .add("interval", item.interval.toString())
+            .add("frequency", item.frequency.toString())
+            .add("progress", item.progress.toString())
             .add("importance", item.importance.toString())
             .add("shared", item.shared.toString())
             .add("finished", item.finished.toString())
@@ -104,20 +106,22 @@ class UpdateTodo {
         return connection_success
     }
 
-    //change a todo item
-    fun putTodo(url: String, item: Todo):Boolean {
+    //change a habit item
+    fun putHabit(url: String, item: Habit):Boolean {
         val client = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
 
-        val putbody: RequestBody = FormBody.Builder()
+        val putBody: RequestBody = FormBody.Builder()
             .add("group", item.group.toString())
             .add("summary", item.summary.toString())
             .add("description", item.description.toString())
-            .add("deadline", item.deadline.toString())
-            .add("progress",item.progress.toString())
+            .add("created", item.created.toString())
+            .add("interval", item.interval.toString())
+            .add("frequency", item.frequency.toString())
+            .add("progress", item.progress.toString())
             .add("importance", item.importance.toString())
             .add("shared", item.shared.toString())
             .add("finished", item.finished.toString())
@@ -126,22 +130,24 @@ class UpdateTodo {
         val request: Request = Request.Builder()
             .url(url)
             .header("Authorization", credentials)
-            .put(putbody)
+            .put(putBody)
             .build()
 
         var connection_success = true
         try {
             client.newCall(request).execute().use { response ->
                 response.body!!.string()
+                Log.e("msg", response.toString())
             }
         }catch (t: Throwable){
+
             Log.e("TAG", "Caught unexpected Throwable: ${t.message}", t)
             connection_success = false
         }
         return connection_success
     }
 
-    fun deleteTodo(url: String):Boolean {
+    fun deleteHabit(url: String):Boolean {
         val client = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)

@@ -1,10 +1,12 @@
 package com.example.comp4521_group22
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.DatePicker
@@ -18,6 +20,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -62,7 +69,7 @@ class EditTodo : AppCompatActivity() {
 
         var deadlinedata: String? = ""
         val dateformat = "yyyy-MM-dd"
-        val sdf = SimpleDateFormat(dateformat, Locale.CHINA)
+        val sdf = SimpleDateFormat(dateformat, Locale.UK)
 
         //get data from local room db
         Handler(Looper.getMainLooper()).post {
@@ -90,7 +97,7 @@ class EditTodo : AppCompatActivity() {
             override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
                 calendar.set(year, month, day)
                 val myformat = "yyyy-MM-dd"
-                val sdf = SimpleDateFormat(myformat, Locale.CHINA)
+                val sdf = SimpleDateFormat(myformat, Locale.UK)
                 deadlinedata = sdf.format(calendar.time)
                 edit_todo_deadline.text = deadlinedata
             }
@@ -131,36 +138,38 @@ class EditTodo : AppCompatActivity() {
             edit_todo_progressBar.visibility = View.VISIBLE
 
             //retrieve other data and submit
-            thread {
-                val description: String = if (edit_todo_description.text.toString().trim().isNotEmpty()) edit_todo_description.text.toString() else "null"
-                val progress: String = if (edit_todo_progress.text.toString().trim().isNotEmpty()) edit_todo_progress.text.toString() else "null"
-                val myformat = "yyyy-MM-dd"
-                val sdf = SimpleDateFormat(myformat, Locale.CHINA)
-                val created = sdf.format(Date())
-                if (edit_todo_deadline == null) { deadlinedata = "" }
-                if(deadlinedata == null){ deadlinedata = "" }
 
-                val updatedTodo = Todo(
-                    global_id = 0,
-                    group = groupdata,
-                    summary = summary,
-                    description = description,
-                    deadline = deadlinedata,
-                    importance = importance_data,
-                    finished = false,
-                    created = created,
-                    progress = progress,
-                    shared = false
-                )
+            val description: String = if (edit_todo_description.text.toString().trim().isNotEmpty()) edit_todo_description.text.toString() else "null"
+            val progress: String = if (edit_todo_progress.text.toString().trim().isNotEmpty()) edit_todo_progress.text.toString() else "null"
+            val myformat = "yyyy-MM-dd"
+            val sdf = SimpleDateFormat(myformat, Locale.UK)
+            val created = sdf.format(Date())
+            if (edit_todo_deadline == null) { deadlinedata = "" }
+            if(deadlinedata == null){ deadlinedata = "" }
 
-                //upload data
-                UpdateTodo().putTodo("http://yesducky.com/api/todo/" + "$ID"+"/", updatedTodo)
+            val updatedTodo = Todo(
+                global_id = ID,
+                group = groupdata,
+                summary = summary,
+                description = description,
+                deadline = deadlinedata,
+                importance = importance_data,
+                finished = false,
+                created = created,
+                progress = progress,
+                shared = false
+            )
 
-                //back to the main activity
-                Handler(Looper.getMainLooper()).post {
-                    startActivity(Intent(this, MainActivity::class.java))
+            CoroutineScope(Dispatchers.Main).launch {
+                val TodoDao = TodoDB.getDatabase(MainActivity()).TodoDAO()
+                withContext(IO){
+                    TodoDao.update(updatedTodo)
+                    UpdateTodo().putTodo("http://yesducky.com/api/todo/" + "$ID"+"/", updatedTodo)
                 }
+                startActivity(Intent(this@EditTodo, MainActivity::class.java))
+                finish()
             }
+
         }
 
         edit_todo_delete.setOnClickListener {
@@ -176,6 +185,7 @@ class EditTodo : AppCompatActivity() {
 
                 Handler(Looper.getMainLooper()).post {
                     startActivity(Intent(this, MainActivity::class.java))
+                    finish()
                 }
             }
         }
@@ -184,5 +194,6 @@ class EditTodo : AppCompatActivity() {
         edit_todo_back_button.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
         }
+
     }
 }

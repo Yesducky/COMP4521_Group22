@@ -18,7 +18,10 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
 
         //init database
-        thread {TodoDB.getDatabase(this) }.join()
+        thread {
+            TodoDB.getDatabase(this)
+            HabitDB.getDatabase(this)
+        }.join()
 
         //set the main fragment
         setCurrentFragment(fragmentList)

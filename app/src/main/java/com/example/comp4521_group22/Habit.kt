@@ -25,7 +25,7 @@ data class Habit(
     val created:String?,
 
     @ColumnInfo(name = "interval")
-    val interval:List<Int> = listOf(0,0,0,0,0,0,0), //mon to sun
+    val interval:String?, //mon to sun
 
     @ColumnInfo(name = "frequency")
     val frequency:Int,
