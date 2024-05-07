@@ -44,6 +44,7 @@
                 android:id="@+id/list_item_habit_progress"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:paddingEnd="10dp"
                 android:text="TextView"
                 android:textAlignment="viewEnd"
                 app:autoSizeTextType="uniform" />

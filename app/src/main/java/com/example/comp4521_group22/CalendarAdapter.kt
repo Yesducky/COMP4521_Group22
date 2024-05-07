@@ -8,6 +8,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +20,9 @@ import kotlin.concurrent.thread
 
 class CalendarAdapter(var dates: ArrayList<String>, var month: Int, var year: Int, val TodoDao: TodoDAO): RecyclerView.Adapter<CalendarViewHolder>() {
     val colorList = listOf(
-        Color.rgb(153, 255, 102), // green
-        Color.rgb(255, 204, 102), //orange
-        Color.rgb(255, 102, 102) //red
+        Color.rgb(0, 94, 82), // green
+        Color.rgb(204, 102, 0), //orange
+        Color.rgb(62, 0, 0) //red
     )
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.calendar_item, parent, false)
@@ -33,6 +34,10 @@ class CalendarAdapter(var dates: ArrayList<String>, var month: Int, var year: In
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
         holder.date.text = dates[position]
+        if(dates[position].isEmpty()){
+            holder.itemView.background = null
+        }
+
         if(dates[position].isNotEmpty()){
             thread {
                 val datePattern = TodoDao.buildDatePattern(dates[position].toInt(), month, year)

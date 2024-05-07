@@ -149,6 +149,7 @@ class EditHabit : AppCompatActivity() {
 
             //loading effect
             putbutton.visibility = View.GONE
+            deleteButton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
 
             //data collection

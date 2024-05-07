@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +32,7 @@ class FragmentList : Fragment() {
     private lateinit var listAdapter: ListAdapter
     private lateinit var rvListHabit: RecyclerView
     private lateinit var ListHabitAdapter: ListAdapterHabit
-    private lateinit var checkAllBtn: Button
+    private lateinit var checkAllBtn: LinearLayout
     private lateinit var HabitDAO: HabitDAO
     private lateinit var TodoDAO: TodoDAO
 
@@ -48,7 +49,7 @@ class FragmentList : Fragment() {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
 
         val addBtn = view.findViewById<FloatingActionButton>(R.id.fragment_list_add_button)
-        checkAllBtn = view.findViewById<Button>(R.id.btn_check_all)
+        checkAllBtn = view.findViewById(R.id.btn_check_all)
         val swipeRefreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.container)
         TodoDAO = TodoDB.getDatabase(MainActivity()).TodoDAO()
         HabitDAO = HabitDB.getDatabase(MainActivity()).habitDao()
@@ -83,9 +84,10 @@ class FragmentList : Fragment() {
         //init list
         CoroutineScope(Main).launch {
             swipeRefreshLayout.isRefreshing = true
+            checkAllBtn.visibility = View.GONE
             withContext(IO) {
                 ListHabitAdapter = ListAdapterHabit(HabitDAO.getAllHabits())
-                listAdapter = ListAdapter(TodoDAO.getBySpecificDate(datePattern))
+                listAdapter = if(mode == 0) ListAdapter(TodoDAO.getBySpecificDateAndNull(datePattern)) else ListAdapter(TodoDAO.getBySpecificDate(datePattern))
             }
             if(mode == 1){
                 view.findViewById<RecyclerView>(R.id.fragment_list_habit_recycler_view).visibility = View.GONE
@@ -95,17 +97,21 @@ class FragmentList : Fragment() {
 
             withContext(IO) {
                 if (UpdateTodo().getTodo(TodoDAO)) {
-                    listAdapter = ListAdapter(TodoDAO.getBySpecificDate(datePattern))
+                    if(mode == 0){
+                        listAdapter.ls = TodoDAO.getBySpecificDateAndNull(datePattern)
+                    }else{
+                        listAdapter.ls = TodoDAO.getBySpecificDate(datePattern)
+                    }
                 }
                 if (UpdateHabit().getHabit(HabitDAO)){
                     ListHabitAdapter.ls = HabitDAO.getAllHabits()
                 }
             }
-            rvList.adapter = listAdapter
-            rvListHabit.adapter = ListHabitAdapter
             listAdapter.notifyDataSetChanged()
             ListHabitAdapter.notifyDataSetChanged()
             swipeRefreshLayout.isRefreshing = false
+            checkAllBtn.visibility = View.VISIBLE
+
         }
 
         //swipe down to refresh
@@ -120,7 +126,15 @@ class FragmentList : Fragment() {
 
                 val updatedList = withContext(IO) {
                     UpdateTodo().getTodo(TodoDAO)
-                    TodoDAO.getBySpecificDate(datePattern)
+                    if(mode == 0){
+                        if (checkAllBtn.visibility == View.GONE){
+                            TodoDAO.getAll()
+                        }else{
+                            TodoDAO.getBySpecificDateAndNull(datePattern)
+                        }
+                    }else{
+                        TodoDAO.getBySpecificDate(datePattern)
+                    }
                 }
                 val la =ListAdapter(updatedList)
                 rvList.adapter = la
@@ -140,6 +154,7 @@ class FragmentList : Fragment() {
             activity?.startActivity(intent)
         }
 
+
         //check all
         checkAllBtn.setOnClickListener{
             CoroutineScope(Main).launch {
@@ -149,6 +164,7 @@ class FragmentList : Fragment() {
                 val la =ListAdapter(updatedList)
                 rvList.adapter = la
                 la.notifyDataSetChanged()
+                tvDate.text = "ALL"
                 checkAllBtn.visibility = View.GONE
             }
         }

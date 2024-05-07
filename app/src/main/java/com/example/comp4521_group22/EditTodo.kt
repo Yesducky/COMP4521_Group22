@@ -69,7 +69,7 @@ class EditTodo : AppCompatActivity() {
 
         var deadlinedata: String? = ""
         val dateformat = "yyyy-MM-dd"
-        val sdf = SimpleDateFormat(dateformat, Locale.CHINA)
+        val sdf = SimpleDateFormat(dateformat, Locale.UK)
 
         //get data from local room db
         Handler(Looper.getMainLooper()).post {
@@ -97,7 +97,7 @@ class EditTodo : AppCompatActivity() {
             override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
                 calendar.set(year, month, day)
                 val myformat = "yyyy-MM-dd"
-                val sdf = SimpleDateFormat(myformat, Locale.CHINA)
+                val sdf = SimpleDateFormat(myformat, Locale.UK)
                 deadlinedata = sdf.format(calendar.time)
                 edit_todo_deadline.text = deadlinedata
             }
@@ -142,7 +142,7 @@ class EditTodo : AppCompatActivity() {
             val description: String = if (edit_todo_description.text.toString().trim().isNotEmpty()) edit_todo_description.text.toString() else "null"
             val progress: String = if (edit_todo_progress.text.toString().trim().isNotEmpty()) edit_todo_progress.text.toString() else "null"
             val myformat = "yyyy-MM-dd"
-            val sdf = SimpleDateFormat(myformat, Locale.CHINA)
+            val sdf = SimpleDateFormat(myformat, Locale.UK)
             val created = sdf.format(Date())
             if (edit_todo_deadline == null) { deadlinedata = "" }
             if(deadlinedata == null){ deadlinedata = "" }
@@ -194,5 +194,6 @@ class EditTodo : AppCompatActivity() {
         edit_todo_back_button.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
         }
+
     }
 }

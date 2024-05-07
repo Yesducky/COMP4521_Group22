@@ -2,7 +2,7 @@
     <string name="app_name">COMP4521_Group22</string>
     <string name="add">Add</string>
     <string name="submit">Submit</string>
-    <string name="importance">Importance</string>
+    <string name="importance">Importance:</string>
     <string name="datepicker">Datepicker</string>
     <string name="progress">Progress</string>
     <string name="deadline">Deadline:</string>
@@ -29,4 +29,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="all">All</string>
     <string name="id">ID</string>
+    <string name="view_all_todo"><u>View All Todo</u></string>
 </resources>

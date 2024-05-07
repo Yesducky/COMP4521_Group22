@@ -44,7 +44,7 @@ class InputHabit : AppCompatActivity() {
 
         val todobtn = findViewById<TextView>(R.id.edit_habit_id)
         todobtn.setOnClickListener{
-            startActivity(Intent(this, InputHabit::class.java))
+            startActivity(Intent(this, InputTodo::class.java))
         }
 
         val groupdata = "1"

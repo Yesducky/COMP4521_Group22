@@ -16,7 +16,7 @@ class UpdateTodo {
     //only 1 user allowed which is me, acc my name, pwd my tel no.
     private val credentials = Credentials.basic("leohong", "92816881")
 
-    //get all the todo elements from online
+    //get all the to-do elements from online
     fun getTodo(TodoDAO: TodoDAO):Boolean{
         lateinit var items: List<Todo>
         var JsonString: String = ""

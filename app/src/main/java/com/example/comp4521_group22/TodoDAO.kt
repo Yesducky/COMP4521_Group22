@@ -41,6 +41,9 @@ interface TodoDAO {
     fun getImportanceBySpecificDate(datePattern: String): List<Int>
 
     @Query("SELECT * FROM Todo WHERE deadline LIKE :datePattern OR deadline IS NULL ORDER BY importance DESC")
+    fun getBySpecificDateAndNull(datePattern: String): List<Todo>
+
+    @Query("SELECT * FROM Todo WHERE deadline LIKE :datePattern ORDER BY importance DESC")
     fun getBySpecificDate(datePattern: String): List<Todo>
 
     fun buildDatePattern(day: Int, month: Int, year: Int): String{
