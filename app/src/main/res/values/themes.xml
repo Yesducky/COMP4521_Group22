@@ -4,6 +4,16 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
+    <style name="BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemRippleColor">@android:color/transparent</item>
+    </style>
+    <style name="button_dark_green" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="backgroundTint">@color/dark_green</item>
+    </style>
+    <style name="button_dark_red" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="backgroundTint">@color/dark_red</item>
+    </style>
     <style name="Theme.COMP4521_Group22" parent="Base.Theme.COMP4521_Group22" />
 </resources>

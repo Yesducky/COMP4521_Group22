@@ -4,6 +4,9 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#717171"
+    android:backgroundTintMode="add"
+    android:foregroundTint="#000000"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -16,18 +19,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#9F9F9F"
+        android:layout_height="50dp"
+        android:background="@drawable/bottom_nav_bar_ripple"
+        app:itemHorizontalTranslationEnabled="true"
+        app:itemIconTint="@drawable/bottom_nav_bar"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
+        style="@style/BottomNavigationView"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

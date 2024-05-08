@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -11,435 +11,401 @@
     tools:context=".EditTodo">
 
     <LinearLayout
+        android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#4E4E4E"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/edit_habit_btnBack"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingStart="10dp"
-            android:text="@string/back"
-            android:textColor="#C1C1C1"
-            app:autoSizeTextType="uniform"
-            tools:ignore="RtlSymmetry" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="2"
-            android:text="@string/edit"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            app:autoSizeTextType="uniform" />
-
-        <TextView
-            android:id="@+id/edit_habit_id"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingEnd="10dp"
-            android:text="@string/_00"
-            android:textAlignment="viewEnd"
-            android:textColor="#AEAEAE"
-            app:autoSizeTextType="uniform"
-            tools:ignore="RtlSymmetry" />
-
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/edit_habit_summary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="30dp"
-        android:autofillHints="@string/new_task"
-        android:background="#EAEAEA"
-        android:ems="10"
-        android:hint="Habit Summary"
-        android:inputType="text"
-        android:paddingStart="20dp"
-        android:textColor="#000000"
-        android:textColorHint="#616161"
-        android:textSize="40sp"
-        tools:ignore="RtlSymmetry" />
-
-    <EditText
-        android:id="@+id/edit_habit_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="25dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Habit Description"
-        android:inputType="textMultiLine"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:textColorHint="#787878"
-        android:textSize="20sp"
-        android:autofillHints="@string/description" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
-        android:paddingEnd="80dp"
-        android:paddingBottom="10dp">
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingStart="5dp"
-            android:paddingEnd="7dp"
-            android:text="Progress: "
-            app:autoSizeTextType="uniform" />
-
-        <ImageButton
-            android:id="@+id/edit_habit_btn_left_p"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/baseline_arrow_left_24" />
-
-        <EditText
-            android:id="@+id/edit_habit_progress"
-            android:layout_width="68dp"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:backgroundTint="#5A0000"
-            android:backgroundTintMode="add"
-            android:ems="10"
-            android:inputType="number"
-            android:text="1"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/edit_habit_btn_right_p"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/baseline_arrow_right_24" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
-        android:paddingEnd="80dp">
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingStart="5dp"
-            android:text="Frequency: "
-            app:autoSizeTextType="uniform" />
-
-        <ImageButton
-            android:id="@+id/edit_habit_btn_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/baseline_arrow_left_24" />
-
-        <EditText
-            android:id="@+id/edit_habit_frequency"
-            android:layout_width="68dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#5A0000"
-            android:backgroundTintMode="add"
-            android:ems="10"
-            android:inputType="number"
-            android:text="1"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:autofillHints="" />
-
-        <ImageButton
-            android:id="@+id/edit_habit_btn_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:backgroundTint="#FFFFFF"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/baseline_arrow_right_24" />
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/textViewRepeat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:gravity="center"
-        android:paddingTop="20dp"
-        android:text="Repeat"
-        android:textColor="#000000"
-        android:textSize="20sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <!-- Top row with four checkboxes -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:background="#4E4E4E"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/edit_habit_btnBack"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:paddingStart="10dp"
+                android:text="@string/back"
+                android:textColor="#C1C1C1"
+                app:autoSizeTextType="uniform"
+                tools:ignore="RtlSymmetry" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/mon"
-                    android:textAlignment="center" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="2"
+                android:text="@string/edit"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                app:autoSizeTextType="uniform" />
 
-                <CheckBox
-                    android:id="@+id/edit_checkbox_mon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/edit_habit_id"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:paddingEnd="10dp"
+                android:text="@string/_00"
+                android:textAlignment="viewEnd"
+                android:textColor="#AEAEAE"
+                app:autoSizeTextType="uniform"
+                tools:ignore="RtlSymmetry" />
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/tue"
-                    android:textAlignment="center" />
-
-                <CheckBox
-                    android:id="@+id/edit_checkbox_tue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/wed"
-                    android:textAlignment="center" />
-
-                <CheckBox
-                    android:id="@+id/edit_checkbox_wed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/thur"
-                    android:textAlignment="center" />
-
-                <CheckBox
-                    android:id="@+id/edit_checkbox_thur"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/fri"
-                    android:textAlignment="center" />
-
-                <CheckBox
-                    android:id="@+id/edit_checkbox_fri"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/sat"
-                    android:textAlignment="center" />
-
-                <CheckBox
-                    android:id="@+id/edit_checkbox_sat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sun"
-                    android:textAlignment="center" />
-
-                <CheckBox
-                    android:id="@+id/edit_checkbox_sun"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checked="true" />
-            </LinearLayout>
         </LinearLayout>
 
-        <!-- Bottom row with three edit_checkboxes -->
+        <EditText
+            android:id="@+id/edit_habit_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:autofillHints="@string/new_task"
+            android:background="#EAEAEA"
+            android:ems="10"
+            android:hint="@string/habit_summary"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:textColor="#000000"
+            android:textColorHint="#616161"
+            android:textSize="40sp"
+            tools:ignore="RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/edit_habit_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="25dp"
+            android:autofillHints="@string/description"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/habit_description"
+            android:inputType="textMultiLine"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColorHint="#787878"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="80dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="7dp"
+                android:text="Progress: "
+                app:autoSizeTextType="uniform" />
+
+            <ImageButton
+                android:id="@+id/edit_habit_btn_left_p"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/baseline_arrow_left_24" />
+
+            <EditText
+                android:id="@+id/edit_habit_progress"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:backgroundTint="#5A0000"
+                android:backgroundTintMode="add"
+                android:ems="10"
+                android:inputType="number"
+                android:text="1"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/edit_habit_btn_right_p"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/baseline_arrow_right_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="80dp">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:text="Frequency: "
+                app:autoSizeTextType="uniform" />
+
+            <ImageButton
+                android:id="@+id/edit_habit_btn_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/baseline_arrow_left_24" />
+
+            <EditText
+                android:id="@+id/edit_habit_frequency"
+                android:layout_width="68dp"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:backgroundTint="#5A0000"
+                android:backgroundTintMode="add"
+                android:ems="10"
+                android:inputType="number"
+                android:text="1"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/edit_habit_btn_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/baseline_arrow_right_24" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewRepeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:text="Repeat"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!-- Top row with four checkboxes -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mon"
+                        android:textAlignment="center" />
+
+                    <CheckBox
+                        android:id="@+id/edit_checkbox_mon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@drawable/checkbox_color"
+                        android:checked="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tue"
+                        android:textAlignment="center" />
+
+                    <CheckBox
+                        android:id="@+id/edit_checkbox_tue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@drawable/checkbox_color"
+                        android:checked="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wed"
+                        android:textAlignment="center" />
+
+                    <CheckBox
+                        android:id="@+id/edit_checkbox_wed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@drawable/checkbox_color"
+                        android:checked="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/thur"
+                        android:textAlignment="center" />
+
+                    <CheckBox
+                        android:id="@+id/edit_checkbox_thur"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@drawable/checkbox_color"
+                        android:checked="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fri"
+                        android:textAlignment="center" />
+
+                    <CheckBox
+                        android:id="@+id/edit_checkbox_fri"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@drawable/checkbox_color"
+                        android:checked="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sat"
+                        android:textAlignment="center" />
+
+                    <CheckBox
+                        android:id="@+id/edit_checkbox_sat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@drawable/checkbox_color"
+                        android:checked="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sun"
+                        android:textAlignment="center" />
+
+                    <CheckBox
+                        android:id="@+id/edit_checkbox_sun"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@drawable/checkbox_color"
+                        android:checked="true" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Bottom row with three edit_checkboxes -->
+        </LinearLayout>
     </LinearLayout>
 
-
-
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        android:paddingLeft="25dp"-->
-    <!--        android:paddingRight="25dp">-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/todo_importance_tv"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:text="@string/importance"-->
-    <!--            android:textAlignment="viewStart"-->
-    <!--            android:textSize="20sp" />-->
-
-    <!--        <RadioGroup-->
-    <!--            android:id="@+id/todo_importance"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:orientation="horizontal">-->
-
-    <!--            <RadioButton-->
-    <!--                android:id="@+id/todo_importance_0"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:height="48dp"-->
-    <!--                android:background="#8BC34A"-->
-    <!--                android:checked="true" />-->
-
-    <!--            <RadioButton-->
-    <!--                android:id="@+id/todo_importance_1"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:background="#FFEB3B" />-->
-
-    <!--            <RadioButton-->
-    <!--                android:id="@+id/todo_importance_2"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:background="#F44336" />-->
-    <!--        </RadioGroup>-->
-    <!--    </LinearLayout>-->
-
-    <Button
-        android:id="@+id/edit_habit_submit"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Modify" />
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <Button
-        android:id="@+id/edit_habit_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/delete" />
+        <Button
+            android:id="@+id/edit_habit_delete"
+            style="@style/button_dark_red"
+            android:background="@drawable/rectangle_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/delete" />
+
+        <Button
+            android:id="@+id/edit_habit_submit"
+            style="@style/button_dark_green"
+            android:background="@drawable/rectangle_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Modify" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout8" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

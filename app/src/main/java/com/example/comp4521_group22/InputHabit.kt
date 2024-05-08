@@ -53,7 +53,8 @@ class InputHabit : AppCompatActivity() {
         val habitsummary = findViewById<EditText>(R.id.habit_summary)
         val descriptionData = findViewById<EditText>(R.id.habit_description)
         val frequency = findViewById<EditText>(R.id.habit_frequency)
-        val postbutton = findViewById<Button>(R.id.edit_habit_submit)
+        val postbutton = findViewById<Button>(R.id.habit_submit)
+        val resetbutton = findViewById<Button>(R.id.input_habit_reset)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         val monTog = findViewById<CheckBox>(R.id.checkbox_mon)
         val tueTog = findViewById<CheckBox>(R.id.checkbox_tue)
@@ -66,7 +67,7 @@ class InputHabit : AppCompatActivity() {
         val btnRight = findViewById<ImageButton>(R.id.habit_btn_right)
 
 
-        val daysStates = mutableListOf(1, 1, 1, 1, 1, 1, 1)
+        var daysStates = mutableListOf(1, 1, 1, 1, 1, 1, 1)
 
         val mode = intent.getIntExtra("inputCalendarMode", 0)
         if (mode == 1) {
@@ -130,6 +131,7 @@ class InputHabit : AppCompatActivity() {
 
             //loading effect
             postbutton.visibility = View.GONE
+            resetbutton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
 
             //data collection
@@ -173,6 +175,20 @@ class InputHabit : AppCompatActivity() {
 
             }
 
+        }
+
+        resetbutton.setOnClickListener(){
+            descriptionData.setText("")
+            habitsummary.setText("")
+            frequency.setText("1")
+            daysStates = mutableListOf(1, 1, 1, 1, 1, 1, 1)
+            monTog.isChecked = true
+            tueTog.isChecked = true
+            wedTog.isChecked = true
+            thurTog.isChecked = true
+            friTog.isChecked = true
+            satTog.isChecked = true
+            sunTog.isChecked = true
         }
 
     }

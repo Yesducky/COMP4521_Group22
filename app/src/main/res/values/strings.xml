@@ -30,4 +30,14 @@
     <string name="all">All</string>
     <string name="id">ID</string>
     <string name="view_all_todo"><u>View All Todo</u></string>
+    <string name="clear">Clear</string>
+    <string name="repeat">Repeat</string>
+    <string name="_1">1</string>
+    <string name="reduce">reduce</string>
+    <string name="frequency">Frequency:</string>
+    <string name="new_habbit">New Habbit</string>
+    <string name="todo">Todo</string>
+    <string name="modify">Modify</string>
+    <string name="habit_summary">Habit Summary</string>
+    <string name="habit_description">Habit Description</string>
 </resources>

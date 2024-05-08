@@ -147,10 +147,12 @@ class FragmentList : Fragment() {
         //add button
         addBtn.setOnClickListener {
             val intent = Intent(activity, InputTodo::class.java)
-            intent.putExtra("inputCalendarMode", 1)
-            intent.putExtra("date", date)
-            intent.putExtra("month", month)
-            intent.putExtra("year", year)
+            if(mode == 1){
+                intent.putExtra("inputCalendarMode", 1)
+                intent.putExtra("date", date)
+                intent.putExtra("month", month)
+                intent.putExtra("year", year)
+            }
             activity?.startActivity(intent)
         }
 

@@ -1,5 +1,6 @@
 package com.example.comp4521_group22
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
@@ -30,6 +31,7 @@ import kotlin.concurrent.thread
 
 
 class InputTodo : AppCompatActivity() {
+    @SuppressLint("MissingInflatedId")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +68,7 @@ class InputTodo : AppCompatActivity() {
         val importance_group_1 = findViewById<RadioButton>(R.id.todo_importance_1)
         val importance_group_2 = findViewById<RadioButton>(R.id.todo_importance_2)
         var importance_data:Int = 0
+        val resetbutton = findViewById<Button>(R.id.input_todo_reset)
         val postbutton = findViewById<Button>(R.id.todo_submit)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         var deadlinedata: String = ""
@@ -127,6 +130,7 @@ class InputTodo : AppCompatActivity() {
             }
             //loading effect
             postbutton.visibility = View.GONE
+            resetbutton.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
 
             //data collection
@@ -164,6 +168,18 @@ class InputTodo : AppCompatActivity() {
                     startActivity(Intent(this, MainActivity::class.java))
                 }
             }
+        }
+
+        resetbutton.setOnClickListener(){
+            summaryData.setText("")
+            descriptionData.setText("")
+            deadlinedata = ""
+            tvdeadline.text = deadlinedata
+            progressData.setText("")
+            importance_data = 0
+            importance_group_0.isChecked = true
+            importance_group_1.isChecked = false
+            importance_group_2.isChecked = false
         }
     }
 }

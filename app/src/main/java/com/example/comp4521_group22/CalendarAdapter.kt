@@ -1,29 +1,21 @@
 package com.example.comp4521_group22
 
-import android.content.Intent
 import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.time.Month
 import kotlin.concurrent.thread
 
 class CalendarAdapter(var dates: ArrayList<String>, var month: Int, var year: Int, val TodoDao: TodoDAO): RecyclerView.Adapter<CalendarViewHolder>() {
-    val colorList = listOf(
-        Color.rgb(0, 94, 82), // green
-        Color.rgb(204, 102, 0), //orange
-        Color.rgb(62, 0, 0) //red
-    )
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.calendar_item, parent, false)
         return CalendarViewHolder(view)
@@ -33,6 +25,12 @@ class CalendarAdapter(var dates: ArrayList<String>, var month: Int, var year: In
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
+        val colorList = listOf(
+            ContextCompat.getColor(holder.itemView.context, R.color.dark_green),
+            ContextCompat.getColor(holder.itemView.context, R.color.dark_orange),
+            ContextCompat.getColor(holder.itemView.context, R.color.dark_red),
+        )
+
         holder.date.text = dates[position]
         if(dates[position].isEmpty()){
             holder.itemView.background = null
@@ -42,7 +40,7 @@ class CalendarAdapter(var dates: ArrayList<String>, var month: Int, var year: In
             thread {
                 val datePattern = TodoDao.buildDatePattern(dates[position].toInt(), month, year)
                 val todoImportanceList = TodoDao.getImportanceBySpecificDate(datePattern)
-                addColorDots(holder.impotance_list, todoImportanceList)
+                addColorDots(holder.impotance_list, todoImportanceList, colorList)
             }.join()
             holder.itemView.setOnClickListener{
                 (holder.itemView.context as AppCompatActivity).findViewById<BottomNavigationView>(R.id.bottom_nav).selectedItemId = R.id.menu_list_view
@@ -55,7 +53,7 @@ class CalendarAdapter(var dates: ArrayList<String>, var month: Int, var year: In
         }
     }
 
-    fun addColorDots(textView: TextView, todoImportanceList: List<Int>) {
+    fun addColorDots(textView: TextView, todoImportanceList: List<Int>, colorList: List<Int>) {
         val spannableStringBuilder = SpannableStringBuilder()
 
         todoImportanceList.forEachIndexed { _, i ->
