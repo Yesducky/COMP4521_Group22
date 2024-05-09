@@ -33,9 +33,11 @@ interface HabitDAO {
 
     @Query("DELETE FROM Habit WHERE global_id = :habitId")
     fun deleteAHabit(habitId: Int)
+
     @Query("SELECT * FROM Habit WHERE frequency = :frequency")
     fun getHabitsByFrequency(frequency: Int): List<Habit>
 
     @Query("SELECT * FROM Habit WHERE created BETWEEN :startDate AND :endDate")
     fun getHabitsByCreationDateRange(startDate: String, endDate: String): List<Habit>
+    
 }

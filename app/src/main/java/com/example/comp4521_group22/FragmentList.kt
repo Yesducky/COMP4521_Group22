@@ -81,12 +81,23 @@ class FragmentList : Fragment() {
         val datePattern: String = TodoDAO.buildDatePattern(date,month,year)
         tvDate.text = if(mode == 1) "$date/$month/$year" else "TODAY"
 
+        lateinit var habitlist_all:MutableList<Habit>
+        var habitlist_today:MutableList<Habit> = mutableListOf()
+
         //init list
         CoroutineScope(Main).launch {
             swipeRefreshLayout.isRefreshing = true
             checkAllBtn.visibility = View.GONE
             withContext(IO) {
-                ListHabitAdapter = ListAdapterHabit(HabitDAO.getAllHabits())
+                habitlist_all = HabitDAO.getAllHabits()
+                for (i in habitlist_all){
+                    val interval = i.interval?.removeSurrounding("[", "]")
+                        ?.split(",")?.map { it.trim().toInt() }?.toMutableList()!!
+                    if(interval[currentDate.dayOfWeek.value-1] == 1){
+                        habitlist_today.add(i)
+                    }
+                }
+                ListHabitAdapter = ListAdapterHabit(habitlist_today)
                 listAdapter = if(mode == 0) ListAdapter(TodoDAO.getBySpecificDateAndNull(datePattern)) else ListAdapter(TodoDAO.getBySpecificDate(datePattern))
             }
             if(mode == 1){
@@ -104,7 +115,16 @@ class FragmentList : Fragment() {
                     }
                 }
                 if (UpdateHabit().getHabit(HabitDAO)){
-                    ListHabitAdapter.ls = HabitDAO.getAllHabits()
+                    habitlist_all = HabitDAO.getAllHabits()
+                    habitlist_today = mutableListOf()
+                    for (i in habitlist_all){
+                        val interval = i.interval?.removeSurrounding("[", "]")
+                            ?.split(",")?.map { it.trim().toInt() }?.toMutableList()!!
+                        if(interval[currentDate.dayOfWeek.value-1] == 1){
+                            habitlist_today.add(i)
+                        }
+                    }
+                    ListHabitAdapter.ls = habitlist_today
                 }
             }
             listAdapter.notifyDataSetChanged()
@@ -119,8 +139,16 @@ class FragmentList : Fragment() {
             swipeRefreshLayout.isRefreshing = true
             CoroutineScope(Main).launch {
                 withContext(IO) {
-                    UpdateHabit().getHabit(HabitDAO)
-                    ListHabitAdapter.ls = HabitDAO.getAllHabits()
+                    habitlist_all = HabitDAO.getAllHabits()
+                    habitlist_today = mutableListOf()
+                    for (i in habitlist_all){
+                        val interval = i.interval?.removeSurrounding("[", "]")
+                            ?.split(",")?.map { it.trim().toInt() }?.toMutableList()!!
+                        if(interval[currentDate.dayOfWeek.value-1] == 1){
+                            habitlist_today.add(i)
+                        }
+                    }
+                    ListHabitAdapter.ls = habitlist_today
                 }
                 ListHabitAdapter.notifyDataSetChanged()
 
@@ -163,8 +191,13 @@ class FragmentList : Fragment() {
                 val updatedList = withContext(IO) {
                     TodoDAO.getAll()
                 }
+                habitlist_all = withContext(IO) {
+                    HabitDAO.getAllHabits()
+                }
                 val la =ListAdapter(updatedList)
+                ListHabitAdapter.ls = habitlist_all
                 rvList.adapter = la
+                ListHabitAdapter.notifyDataSetChanged()
                 la.notifyDataSetChanged()
                 tvDate.text = "ALL"
                 checkAllBtn.visibility = View.GONE
