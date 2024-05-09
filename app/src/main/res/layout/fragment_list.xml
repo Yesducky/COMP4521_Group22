@@ -85,7 +85,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:src="@drawable/eye"
-                    android:tint="#808080" />
+                    app:tint="#808080" />
 
                 <TextView
                     android:id="@+id/textView12"
