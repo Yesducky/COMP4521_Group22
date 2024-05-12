@@ -32,9 +32,7 @@ class CalendarAdapter(var dates: ArrayList<String>, var month: Int, var year: In
         )
 
         holder.date.text = dates[position]
-        if(dates[position].isEmpty()){
-            holder.itemView.background = null
-        }
+
 
         if(dates[position].isNotEmpty()){
             thread {
